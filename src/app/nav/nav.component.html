@@ -1,0 +1,121 @@
+<div>
+    <nav class="main-nav container flex">
+        <a routerLink="/" class="company-logo">
+            <img src="favicon.ico" alt="company logo" style="color: white; width: 80px;">
+        </a>
+        <div class="nav-links">
+            <ul class="flex">
+                <li class="hover-link nav-item" id="world" (click)="onNavItemClick('world')">World</li>
+                <li class="hover-link nav-item" id="finance" (click)="onNavItemClick('finance')">Finance</li>
+                <li class="hover-link nav-item" id="politics" (click)="onNavItemClick('politics')">Politics</li>
+                <li class="hover-link nav-item" id="War" (click)="onNavItemClick('war')">War</li>
+                <li class="hover-link nav-item" id="sports" (click)="onNavItemClick('sports')">Sports</li>
+                <li class="hover-link nav-item" id="podcast" (click)="onNavItemClick('podcast')">Podcast</li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">{{selectedCountry}}</button>
+            <ul class="dropdown-content">
+                <li class="nested-dropdown" (click)="toggleNestedDropdown('india')">
+                    India >
+                    <ul class="nested-dropdown" *ngIf="isIndiaDropdownOpen" id="indiaDropdown">
+                        <li (click)="onCountrySelect('India')">India</li>
+                        <li (click)="onCountrySelect('Punjab')">Punjab</li>
+                        <li (click)="onCountrySelect('Bihar')">Bihar</li>
+                        <li (click)="onCountrySelect('Haryana')">Haryana</li>
+                        <li (click)="onCountrySelect('Himachal-Pradesh')">Himachal Pradesh</li>
+                        <li (click)="onCountrySelect('Goa')">Goa</li>
+                        <li (click)="onCountrySelect('Gujarat')">Gujarat</li>
+                        <li (click)="onCountrySelect('Assam')">Assam</li>
+                        <li (click)="onCountrySelect('Sikkim')">Sikkim</li>
+                    </ul>
+                </li>
+
+                <li class="nested-dropdown" (click)="toggleNestedDropdown('us')">
+                    United-State >
+                    <ul class="nested-dropdown" *ngIf="isUsDropdownOpen" id="usDropdown">
+                        <li (click)="onCountrySelect('United-State')">United State</li>
+                        <li (click)="onCountrySelect(' Alabama')"> Alabama</li>
+                        <li (click)="onCountrySelect('  Alaska')"> Alaska</li>
+                        <li (click)="onCountrySelect('  Arizona')"> Arizona</li>
+                        <li (click)="onCountrySelect(' New-Mexico')"> New Mexico</li>
+                        <li (click)="onCountrySelect(' Missouri')"> Missouri</li>
+                        <li (click)="onCountrySelect('  Ohio')"> Ohio</li>
+                        <li (click)="onCountrySelect(' Rhode-Island')"> Rhode Island</li>
+                        <li (click)="onCountrySelect(' South-Dakota')"> South Dakota</li>
+                    </ul>
+                </li>
+                <li class="nested-dropdown" (click)="toggleNestedDropdown('england')">
+                    England >
+                    <ul class="nested-dropdown" *ngIf="isenglandDropdownOpen" id="englandDropdown">
+                        <li (click)="onCountrySelect('England')">England</li>
+                        <li (click)="onCountrySelect('North-East')">North East</li>
+                        <li (click)="onCountrySelect('North-West')">North West</li>
+                        <li (click)="onCountrySelect('London')">London</li>
+                        <li (click)="onCountrySelect('South-East')">South East</li>
+                        <li (click)="onCountrySelect('South-West')">South East</li>
+
+                    </ul>
+                </li>
+                <li class="nested-dropdown" (click)="toggleNestedDropdown('pakistan')">
+                    Pakistan >
+                    <ul class="nested-dropdown" *ngIf="ispakDropdownOpen" id="pakDropdown">
+                        <li (click)="onCountrySelect('Pakistan')">Pakistan</li>
+                        <li (click)="onCountrySelect('Balochistan')">Balochistan</li>
+                        <li (click)="onCountrySelect('Punjab')">Punjab</li>
+                        <li (click)="onCountrySelect('Sindh')">Sindh</li>
+                        <li (click)="onCountrySelect('Khyber-Pakhtunkhwa')">Khyber Pakhtunkhwa</li>
+                        <li (click)="onCountrySelect('Gilgit-Baltistan[a]')">Gilgit-Baltistan[a]</li>
+
+                    </ul>
+                </li>
+                <li class="nested-dropdown" (click)="toggleNestedDropdown('australia')">
+                    australia >
+                    <ul class="nested-dropdown" *ngIf="isausDropdownOpen" id="ausDropdown">
+                        <li (click)="onCountrySelect('Australia')">Australia</li>
+                        <li (click)="onCountrySelect('New-South-Wales')">New South Wales</li>
+                        <li (click)="onCountrySelect('Victoria')">Victoria</li>
+                        <li (click)="onCountrySelect('Queensland')">Queensland</li>
+                        <li (click)="onCountrySelect('Western Australia')">Western Australia</li>
+
+                    </ul>
+                </li>
+                <li class="nested-dropdown" (click)="toggleNestedDropdown('canada')">
+                    Canada >
+                    <ul class="nested-dropdown" *ngIf="iscanadaDropdownOpen" id="canadaDropdown">
+                        <li (click)="onCountrySelect('Canada')">Canada</li>
+                        <li (click)="onCountrySelect('Ontario')">Ontario</li>
+                        <li (click)="onCountrySelect('Quebec')">Quebec</li>
+                        <li (click)="onCountrySelect(' British-Columbia')"> British Columbia</li>
+                        <li (click)="onCountrySelect('Saskatchewan')">Saskatchewan</li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="search-bar flex">
+            <input id="search-text" type="search" class="news-input" placeholder="Search" [(ngModel)]="searchQuery">
+            <button id="search-button" class="search-button" (click)="onSearchClick(searchQuery)">Search</button>
+        </div>
+    </nav>
+    <main>
+        <div class="cards-container container flex" id="cards-container">
+            <div class="card" *ngFor="let article of articles" (click)="openArticle(article.url)"
+                [@cardAnimation]="cardAnimationState">
+                <div class="card-header">
+                    <img [src]="article.urlToImage" alt="news-image" id="news-img">
+                </div>
+                <div class="card-content">
+                    <h3 id="news-title">{{ article.title }}</h3>
+                    <h6 class="news-source" id="news-source">
+                        {{ article.source.name }} · {{ article.publishedAt | date: 'short' : 'UTC' }}
+
+                    </h6>
+                    <p class="news-desc" id="news-desc">{{ article.description }}</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<router-outlet></router-outlet> 
